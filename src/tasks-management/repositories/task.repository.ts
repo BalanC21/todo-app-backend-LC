@@ -1,8 +1,24 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { TaskEntity } from '../entities/task.entity';
+import { Repository } from 'typeorm';
+import { TaskStatusEnum } from '../enums/task-status.enum';
 
 @Injectable()
-export class ClientRepository {
+export class TaskRepository {
   constructor(
-    @InjectRepository
+    @InjectRepository(TaskEntity) protected readonly repository: Repository<TaskEntity>
   ) {}
+
+  findAllTasks(criteria: TaskStatusEnum): Promise<TaskEntity[]> {
+    if (criteria) {
+      return this.getByTaskStatus(criteria);
+    } else {
+      return this.repository.find();
+    }
+  }
+
+  private getByTaskStatus(criteria: TaskStatusEnum): Promise<TaskEntity[]> {
+    return this.repository.findBy({ taskType: criteria });
+  }
 }

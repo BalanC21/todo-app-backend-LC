@@ -1,5 +1,5 @@
 import { TaskStatusEnum } from '../enums/task-status.enum';
 
-export class GetAllProjectsParamsDto {
+export class GetAllTasksParamsDto {
   status?: TaskStatusEnum;
 }
