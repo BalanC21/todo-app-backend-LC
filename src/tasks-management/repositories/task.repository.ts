@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { TaskEntity } from '../entities/task.entity';
 import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm'
+import { InjectRepository } from '@nestjs/typeorm';
 import { TaskStatusEnum } from '../enums/task-status.enum';
 import { Task } from '../models/task.model';
 
@@ -16,17 +16,27 @@ export class TaskRepository {
     if (criteria) {
       return this.getByTaskStatus(criteria);
     } else {
-      return this.repository.find();
+      return this.getAllTasks();
     }
   }
 
   private async getByTaskStatus(criteria: TaskStatusEnum): Promise<Task[]> {
     const taskEntities = await this.repository.findBy({ taskType: criteria });
-    let tasks:Task[] = [];
+    return this.convertToModel(taskEntities);
+  }
+
+  private convertToModel(taskEntities: TaskEntity[]) {
+    let tasks: Task[] = [];
     for (let taskEntity of taskEntities) {
-      tasks.save(Task.fromEntity(taskEntity))
+      tasks.push(Task.fromEntity(taskEntity));
     }
     return tasks;
+  }
+
+  private async getAllTasks(){
+    const taskEntities = await this.repository.find();
+    return this.convertToModel(taskEntities);
+
   }
 
   async saveOne(task: Task): Promise<TaskEntity>{

@@ -9,8 +9,8 @@ export class Task {
   taskName: string;
   taskDescription: string;
   taskType!: TaskStatusEnum;
-  taskDeadline: Date;
-  taskCreatedAt: Date;
+  taskDeadline: string;
+  // taskCreatedAt: Date;
 
   constructor(taskData: ITask) {
     this.id = taskData.id;
