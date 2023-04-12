@@ -5,7 +5,8 @@ import { GetAllTasksParamsDto } from '../dtos/get-all-tasks-params.dto';
 
 @Controller('api/tasks')
 export class TaskController {
-  constructor(readonly taskService: TaskService) {}
+  constructor(readonly taskService: TaskService) {
+  }
 
   @Get()
   getAllTasks(@Body() getAllTasksParamsDto: GetAllTasksParamsDto): Promise<TaskDto[]> {
