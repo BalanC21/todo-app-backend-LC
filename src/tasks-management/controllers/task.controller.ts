@@ -20,7 +20,7 @@ export class TaskController {
 
   @Post()
   async addNewTask(@Body() newTask: TaskDto): Promise<TaskDto> {
-    return;
+    return this.taskService.createTask(newTask);
   }
 
   @Delete(':id')

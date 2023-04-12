@@ -13,4 +13,6 @@ export class TaskEntity {
   taskType!: TaskStatusEnum;
   @Column()
   taskDeadline: Date;
+  // @Column()
+  // taskCreatedAt: Date;
 }
