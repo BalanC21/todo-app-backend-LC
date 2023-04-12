@@ -5,5 +5,5 @@ export interface ITask {
   taskName?: string;
   taskDescription?: string;
   taskType?: TaskStatusEnum;
-  taskDeadline?: Date;
+  taskDeadline?: string;
 }
