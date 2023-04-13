@@ -10,13 +10,14 @@ export class Task {
   taskDescription: string;
   taskType!: TaskStatusEnum;
   taskDeadline: string;
+
   // taskCreatedAt: Date;
 
   constructor(taskData: ITask) {
     this.id = taskData.id;
     this.taskName = taskData.taskName;
     this.taskDescription = taskData.taskDescription;
-    this.taskType = TaskStatusEnum.unCompleted;
+    this.taskType = taskData.taskType;
     this.taskDeadline = taskData.taskDeadline;
     // this.taskCreatedAt = new Date();
   }
@@ -25,18 +26,18 @@ export class Task {
     return new Task(command.payload);
   }
 
-  static fromEntity(entity: TaskEntity): Task{
-    return new Task(entity)
+  static fromEntity(entity: TaskEntity): Task {
+    return new Task(entity);
   }
 
-  toEntity(): TaskEntity{
-    return entityFactory( TaskEntity, {
+  toEntity(): TaskEntity {
+    return entityFactory(TaskEntity, {
       id: this.id,
       taskName: this.taskName,
       taskDescription: this.taskDescription,
       taskType: this.taskType,
-      taskDeadline: this.taskDeadline,
+      taskDeadline: this.taskDeadline
       // taskCreatedAt: this.taskCreatedAt
-    })
+    });
   }
 }

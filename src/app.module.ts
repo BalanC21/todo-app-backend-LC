@@ -10,15 +10,16 @@ import { TaskManagementModule } from './tasks-management/task-management.module'
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'MinaDeCreion-2002',
+      password: 'postgres',
       database: 'todo_team',
       entities: [TaskEntity],
       synchronize: true,
-      dropSchema: true,
+      dropSchema: false
     }),
-    TaskManagementModule,
+    TaskManagementModule
   ],
   controllers: [],
-  providers: [],
+  providers: []
 })
-export class AppModule {}
+export class AppModule {
+}
