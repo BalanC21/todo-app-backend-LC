@@ -8,7 +8,7 @@ import { Task } from '../models/task.model';
 @Injectable()
 export class TaskRepository {
   constructor(
-    @InjectRepository(TaskEntity) protected readonly repository: Repository<TaskEntity>,
+    @InjectRepository(TaskEntity) protected readonly repository: Repository<TaskEntity>
   ) {
   }
 
@@ -18,6 +18,14 @@ export class TaskRepository {
     } else {
       return this.getAllTasks();
     }
+  }
+
+  async saveOne(task: Task): Promise<TaskEntity> {
+    return await this.repository.save(task.toEntity());
+  }
+
+  async findTaskByTaskId(taskId: number) {
+    return await this.repository.findOneBy({ id: taskId });
   }
 
   private async getByTaskStatus(criteria: TaskStatusEnum): Promise<Task[]> {
@@ -33,13 +41,9 @@ export class TaskRepository {
     return tasks;
   }
 
-  private async getAllTasks(){
+  private async getAllTasks() {
     const taskEntities = await this.repository.find();
     return this.convertToModel(taskEntities);
 
-  }
-
-  async saveOne(task: Task): Promise<TaskEntity>{
-    return await this.repository.save(task.toEntity())
   }
 }

@@ -4,8 +4,7 @@ import { GetAllTasksQuery } from '../queries/impl/get-all-tasks.query';
 import { GetAllTasksParamsDto } from '../dtos/get-all-tasks-params.dto';
 import { TaskDto } from '../dtos/task.dto';
 import { CreateTaskCommand } from '../commands/impl/create-task.command';
-import { Task } from '../models/task.model';
-import { TaskEntity } from '../entities/task.entity';
+import { MarkTaskCompletedCommand } from '../commands/impl/mark-task-completed.command';
 
 @Injectable()
 export class TaskService {
@@ -19,8 +18,13 @@ export class TaskService {
     return await this.queryBus.execute(query);
   }
 
-  async createTask(taskDto: TaskDto){
+  async createTask(taskDto: TaskDto) {
     const command = new CreateTaskCommand(taskDto);
-    return await this.commandBus.execute( command );
+    return await this.commandBus.execute(command);
+  }
+
+  async markTaskAsDone(taskId: number) {
+    const command = new MarkTaskCompletedCommand({ taskId: taskId });
+    return await this.commandBus.execute(command);
   }
 }
