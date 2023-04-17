@@ -10,7 +10,7 @@ import { TaskManagementModule } from './tasks-management/task-management.module'
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'postgres',
+      password: 'MinaDeCreion-2002',
       database: 'todo_team',
       entities: [TaskEntity],
       synchronize: true,
