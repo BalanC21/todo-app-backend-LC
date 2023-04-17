@@ -10,7 +10,6 @@ export class TaskController {
 
   @Get()
   getAllTasks(@Query(new ValidationPipe({ transform: true })) params: GetAllTasksParamsDto): Promise<TaskDto[]> {
-    console.log("pull");
     return this.taskService.getAllTasks(params);
   }
 
