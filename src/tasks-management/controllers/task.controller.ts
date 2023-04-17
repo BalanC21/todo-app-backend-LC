@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, ValidationPipe } from '@nestjs/common';
 import { TaskDto } from '../dtos/task.dto';
 import { TaskService } from '../services/task.service';
 import { GetAllTasksParamsDto } from '../dtos/get-all-tasks-params.dto';
@@ -9,8 +9,8 @@ export class TaskController {
   }
 
   @Get()
-  getAllTasks(@Body() getAllTasksParamsDto: GetAllTasksParamsDto): Promise<TaskDto[]> {
-    return this.taskService.getAllTasks(getAllTasksParamsDto);
+  getAllTasks(@Query(new ValidationPipe({ transform: true })) params: GetAllTasksParamsDto): Promise<TaskDto[]> {
+    return this.taskService.getAllTasks(params);
   }
 
   @Get(':id')
@@ -29,7 +29,7 @@ export class TaskController {
   }
 
   @Patch(':id')
-  async updateTask(@Param('id') id: number): Promise<TaskDto> {
-    return;
+  async markTaskAsDone(@Param('id') id: number): Promise<TaskDto> {
+    return this.taskService.markTaskAsDone(id);
   }
 }

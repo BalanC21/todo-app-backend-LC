@@ -7,6 +7,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { CreateTaskHandler } from './commands/handler/create-task.handler';
 import { TaskRepository } from './repositories/task.repository';
 import { GetAllTasksHandler } from './queries/handlers/get-all-tasks.handler';
+import { MarkTaskCompletedHandler } from './commands/handler/mark-task-completed.handler';
 
 @Module({
   imports: [
@@ -14,8 +15,13 @@ import { GetAllTasksHandler } from './queries/handlers/get-all-tasks.handler';
     CqrsModule
   ],
   controllers: [TaskController],
-  providers: [TaskService, CreateTaskHandler, TaskRepository, GetAllTasksHandler],
-  exports:[
+  providers: [TaskService,
+    CreateTaskHandler,
+    TaskRepository,
+    GetAllTasksHandler,
+    MarkTaskCompletedHandler
+  ],
+  exports: [
     TaskRepository
   ]
 })

@@ -26,6 +26,11 @@ export class Task {
     return new Task(command.payload);
   }
 
+  static markAsCompleted(command: CreateTaskCommand): Task {
+    command.payload.taskType = TaskStatusEnum.completed;
+    return new Task(command.payload);
+  }
+
   static fromEntity(entity: TaskEntity): Task {
     return new Task(entity);
   }
