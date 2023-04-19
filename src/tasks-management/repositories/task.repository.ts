@@ -12,12 +12,11 @@ export class TaskRepository {
   ) {
   }
 
-  findAllTasks(criteria: TaskStatusEnum): Promise<Task[]> {
-    if (criteria) {
-      return this.getByTaskStatus(criteria);
-    } else {
-      return this.getAllTasks();
+  findAllTasks(status?: TaskStatusEnum): Promise<Task[]> {
+    if (status) {
+      return this.getByTaskStatus(status);
     }
+    return this.getAllTasks();
   }
 
   async saveOne(task: Task): Promise<TaskEntity> {
@@ -28,8 +27,8 @@ export class TaskRepository {
     return await this.repository.findOneBy({ id: taskId });
   }
 
-  private async getByTaskStatus(criteria: TaskStatusEnum): Promise<Task[]> {
-    const taskEntities = await this.repository.findBy({ taskType: criteria });
+  private async getByTaskStatus(status: TaskStatusEnum): Promise<Task[]> {
+    const taskEntities = await this.repository.findBy({ taskType: status });
     return this.convertToModel(taskEntities);
   }
 

@@ -14,7 +14,7 @@ export class GetAllTasksHandler extends BaseQueryHandler<GetAllTasksQuery, Task[
   }
 
   execute(query: GetAllTasksQuery): Promise<Task[]> {
-    const criteria: TaskStatusEnum = query.params.status;
-    return this.repository.findAllTasks(criteria);
+    const status: TaskStatusEnum = query.params.status;
+    return this.repository.findAllTasks(status);
   }
 }
