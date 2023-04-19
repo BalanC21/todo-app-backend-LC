@@ -1,4 +1,4 @@
-import { IDomainCommand } from '../../../shared/generics/domain-command.interface';
+import { IDomainCommand } from '../../../shared/interfaces/generics/domain-command.interface';
 import { TaskDto } from '../../dtos/task.dto';
 
 export class CreateTaskCommand implements IDomainCommand<TaskDto>{

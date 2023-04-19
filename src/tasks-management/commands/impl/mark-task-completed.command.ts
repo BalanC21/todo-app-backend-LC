@@ -1,4 +1,4 @@
-import { IDomainCommand } from '../../../shared/generics/domain-command.interface';
+import { IDomainCommand } from '../../../shared/interfaces/generics/domain-command.interface';
 import { MarkTaskCompletedDto } from '../../dtos/mark-task-completed.dto';
 
 export class MarkTaskCompletedCommand implements IDomainCommand<MarkTaskCompletedDto> {
