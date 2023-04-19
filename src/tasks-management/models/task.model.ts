@@ -1,8 +1,10 @@
-import { TaskStatusEnum } from '../enums/task-status.enum';
-import { ITask } from '../interfaces/task.interface';
-import { CreateTaskCommand } from '../commands/impl/create-task.command';
-import { TaskEntity } from '../entities/task.entity';
-import { entityFactory } from '../../shared/generics/entity-factory.function';
+import { TaskStatusEnum } from "../enums/task-status.enum";
+import { ITask } from "../interfaces/task.interface";
+import { CreateTaskCommand } from "../commands/impl/create-task.command";
+import { TaskEntity } from "../entities/task.entity";
+import { entityFactory } from "../../shared/generics/entity-factory.function";
+import { Result } from "../../shared/result/result";
+import { Success } from "../../shared/functions/result-builder.functions";
 
 export class Task {
   id: number;
@@ -31,8 +33,8 @@ export class Task {
     return new Task(command.payload);
   }
 
-  static fromEntity(entity: TaskEntity): Task {
-    return new Task(entity);
+  static fromEntity(entity: TaskEntity): Result<Task> {
+    return Success(new Task(entity));
   }
 
   toEntity(): TaskEntity {

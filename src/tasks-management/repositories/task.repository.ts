@@ -1,9 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { TaskEntity } from '../entities/task.entity';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { TaskStatusEnum } from '../enums/task-status.enum';
-import { Task } from '../models/task.model';
+import { Injectable } from "@nestjs/common";
+import { TaskEntity } from "../entities/task.entity";
+import { Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
+import { TaskStatusEnum } from "../enums/task-status.enum";
+import { Task } from "../models/task.model";
+import { Result } from "../../shared/result/result";
+import { valueIsEmpty } from "../../shared/functions/value-is-empty.function";
+import { NotFound } from "../../shared/functions/result-builder.functions";
 
 @Injectable()
 export class TaskRepository {
@@ -12,7 +15,7 @@ export class TaskRepository {
   ) {
   }
 
-  findAllTasks(status?: TaskStatusEnum): Promise<Task[]> {
+  findAllTasks(status?: TaskStatusEnum): Promise<Result<Task[]>> {
     if (status) {
       return this.getByTaskStatus(status);
     }
@@ -27,22 +30,26 @@ export class TaskRepository {
     return await this.repository.findOneBy({ id: taskId });
   }
 
-  private async getByTaskStatus(status: TaskStatusEnum): Promise<Task[]> {
-    const taskEntities = await this.repository.findBy({ taskType: status });
-    return this.convertToModel(taskEntities);
+  entityToResult(entity: TaskEntity | null): Result<Task> {
+    return valueIsEmpty(entity)
+      ? NotFound()
+      : Task.fromEntity(entity);
   }
 
-  private convertToModel(taskEntities: TaskEntity[]) {
-    let tasks: Task[] = [];
-    for (let taskEntity of taskEntities) {
-      tasks.push(Task.fromEntity(taskEntity));
-    }
-    return tasks;
+  entitiesToResult(entities: TaskEntity[]): Result<Task[]> {
+    return valueIsEmpty(entities)
+      ? NotFound()
+      : Result.aggregateResults(...entities.map(this.entityToResult));
   }
 
-  private async getAllTasks() {
-    const taskEntities = await this.repository.find();
-    return this.convertToModel(taskEntities);
-
+  private async getByTaskStatus(status: TaskStatusEnum): Promise<Result<Task[]>> {
+    const taskEntities: TaskEntity[] = await this.repository.findBy({ taskType: status });
+    return this.entitiesToResult(taskEntities);
   }
+
+  private async getAllTasks(): Promise<Result<Task[]>> {
+    const taskEntities:TaskEntity[] = await this.repository.find();
+    return this.entitiesToResult(taskEntities);
+  }
+
 }
