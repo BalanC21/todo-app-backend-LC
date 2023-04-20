@@ -1,12 +1,19 @@
-import { IDomainCommand } from '../../../shared/generics/domain-command.interface';
-import { MarkTaskCompletedDto } from '../../dtos/mark-task-completed.dto';
+import { IDomainCommand } from "../../../shared/interfaces/generics/domain-command.interface";
+import { ITask } from "../../interfaces/task.interface";
+import { MarkTaskCompletedIdDto } from "../../dtos/mark-task-completed-id.dto";
 
-export class MarkTaskCompletedCommand implements IDomainCommand<MarkTaskCompletedDto> {
+export class MarkTaskCompletedCommand implements IDomainCommand<MarkTaskCompletedIdDto> {
   readonly name: string;
-  readonly payload: MarkTaskCompletedDto;
+  readonly payload: MarkTaskCompletedIdDto;
+  task?: ITask;
 
-  constructor(payload: MarkTaskCompletedDto) {
+  constructor(payload: MarkTaskCompletedIdDto, task = null) {
     this.payload = payload;
     this.name = MarkTaskCompletedCommand.name;
+    this.task = task;
+  }
+
+  setTask(task: ITask) {
+    this.task = task;
   }
 }

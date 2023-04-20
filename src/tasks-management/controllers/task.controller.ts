@@ -1,20 +1,21 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, ValidationPipe } from '@nestjs/common';
-import { TaskDto } from '../dtos/task.dto';
-import { TaskService } from '../services/task.service';
-import { GetAllTasksParamsDto } from '../dtos/get-all-tasks-params.dto';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, ValidationPipe } from "@nestjs/common";
+import { TaskDto } from "../dtos/task.dto";
+import { TaskService } from "../services/task.service";
+import { GetAllTasksParamsDto } from "../dtos/get-all-tasks-params.dto";
+import { DisplayTaskDto } from "../dtos/display-task-dto";
 
-@Controller('api/tasks')
+@Controller("api/tasks")
 export class TaskController {
   constructor(readonly taskService: TaskService) {
   }
 
   @Get()
-  getAllTasks(@Query(new ValidationPipe({ transform: true })) params: GetAllTasksParamsDto): Promise<TaskDto[]> {
+  getAllTasks(@Query(new ValidationPipe({ transform: true })) params: GetAllTasksParamsDto): Promise<DisplayTaskDto[]> {
     return this.taskService.getAllTasks(params);
   }
 
-  @Get(':id')
-  async getTaskById(@Param('id') id: string): Promise<TaskDto> {
+  @Get(":id")
+  async getTaskById(@Param("id") id: string): Promise<TaskDto> {
     return;
   }
 
@@ -23,13 +24,13 @@ export class TaskController {
     return this.taskService.createTask(newTask);
   }
 
-  @Delete(':id')
-  async deleteTask(@Param('id') id: number): Promise<TaskDto> {
+  @Delete(":id")
+  async deleteTask(@Param("id") id: number): Promise<TaskDto> {
     return;
   }
 
-  @Patch(':id')
-  async markTaskAsDone(@Param('id') id: number): Promise<TaskDto> {
+  @Patch(":id")
+  async markTaskAsDone(@Param("id") id: number): Promise<TaskDto> {
     return this.taskService.markTaskAsDone(id);
   }
 }

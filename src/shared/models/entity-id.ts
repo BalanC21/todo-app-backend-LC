@@ -9,7 +9,7 @@ export class EntityId {
     return new EntityId();
   }
 
-  static create(idValue: number, propertyName = 'id'): EntityId {
+  static create(idValue: number, propertyName: string = "id"): EntityId {
     return new EntityId(idValue);
   }
 
