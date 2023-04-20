@@ -31,6 +31,6 @@ export class TaskController {
 
   @Patch(":id")
   async markTaskAsDone(@Param("id") id: number): Promise<TaskDto> {
-    return this.taskService.markTaskAsDone(id);
+    return this.taskService.markTaskAsDone(+id);  // aici a fost Luca :)
   }
 }

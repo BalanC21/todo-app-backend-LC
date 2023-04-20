@@ -27,6 +27,7 @@ export class Task {
   }
 
   static fromEntity(entity: TaskEntity): Result<Task> {
+
     return Success(new Task(entity));
   }
 

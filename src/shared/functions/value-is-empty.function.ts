@@ -2,7 +2,7 @@ import { isBoolean } from "class-validator";
 import { isArray, isEmpty, isNil } from "lodash";
 
 export function valueIsEmpty(value: Object | string | number | boolean | null | undefined): value is undefined | null {
-
+  
   if (typeof value === "number") {
     return isNil(value);
   }

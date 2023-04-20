@@ -1,3 +1,7 @@
+import { ValidationChainModel } from "./validation-chain.model";
+import { Failed, Success } from "../functions/result-builder.functions";
+import { Result } from "../result/result";
+
 export class EntityId {
   private readonly idValue;
 
@@ -9,8 +13,13 @@ export class EntityId {
     return new EntityId();
   }
 
-  static create(idValue: number, propertyName: string = "id"): EntityId {
-    return new EntityId(idValue);
+  static create(idValue: number, propertyName: string = "id"): Result<EntityId> {
+    const validation = ValidationChainModel.validate<any>().isIdNumber(idValue, propertyName).getResult();
+
+    if (validation.isFailed) {
+      return Failed(...validation.errors);
+    }
+    return Success(new EntityId(idValue));
   }
 
   getIdValue(): number {

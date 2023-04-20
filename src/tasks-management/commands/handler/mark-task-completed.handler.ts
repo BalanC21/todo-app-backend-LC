@@ -18,7 +18,7 @@ export class MarkTaskCompletedHandler extends BaseCommandHandler<MarkTaskComplet
   }
 
   async execute(command: MarkTaskCompletedCommand): Promise<TaskEntity> {
-    const taskId: EntityId = TaskIdModel.create(command.payload.taskId);
+    const taskId: EntityId = TaskIdModel.create(command.payload.taskId).value;
 
     const toUpdateTask: TaskEntity = await this.selectOneById(taskId);
 
