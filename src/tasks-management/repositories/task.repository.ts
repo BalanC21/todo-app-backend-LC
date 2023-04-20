@@ -48,7 +48,7 @@ export class TaskRepository {
   }
 
   private async getAllTasks(): Promise<Result<Task[]>> {
-    const taskEntities:TaskEntity[] = await this.repository.find();
+    const taskEntities: TaskEntity[] = await this.repository.find();
     return this.entitiesToResult(taskEntities);
   }
 

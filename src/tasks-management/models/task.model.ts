@@ -5,6 +5,7 @@ import { TaskEntity } from "../entities/task.entity";
 import { entityFactory } from "../../shared/generics/entity-factory.function";
 import { Result } from "../../shared/result/result";
 import { Success } from "../../shared/functions/result-builder.functions";
+import { MarkTaskCompletedCommand } from "../commands/impl/mark-task-completed.command";
 
 export class Task {
   id: number;
@@ -13,28 +14,26 @@ export class Task {
   taskType!: TaskStatusEnum;
   taskDeadline: string;
 
-  // taskCreatedAt: Date;
-
   constructor(taskData: ITask) {
     this.id = taskData.id;
     this.taskName = taskData.taskName;
     this.taskDescription = taskData.taskDescription;
     this.taskType = taskData.taskType;
     this.taskDeadline = taskData.taskDeadline;
-    // this.taskCreatedAt = new Date();
   }
 
   static create(command: CreateTaskCommand): Task {
     return new Task(command.payload);
   }
 
-  static markAsCompleted(command: CreateTaskCommand): Task {
-    command.payload.taskType = TaskStatusEnum.completed;
-    return new Task(command.payload);
-  }
-
   static fromEntity(entity: TaskEntity): Result<Task> {
     return Success(new Task(entity));
+  }
+
+  markAsCompleted(command: MarkTaskCompletedCommand): Result<Task> {
+    const taskType: TaskStatusEnum.completed = TaskStatusEnum.completed;
+
+    return Success(new Task({ ...this, taskType }));
   }
 
   toEntity(): TaskEntity {
@@ -44,7 +43,6 @@ export class Task {
       taskDescription: this.taskDescription,
       taskType: this.taskType,
       taskDeadline: this.taskDeadline
-      // taskCreatedAt: this.taskCreatedAt
     });
   }
 }
