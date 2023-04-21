@@ -20,7 +20,7 @@ export class CustomLogger<T, F extends Function> {
     console.log();
   }
 
-  logValue(value: any) {
+  logValue(value: any): void {
     console.log("value is: " + value + " and is typeof:-> " + typeof value);
     console.log();
   }
@@ -32,7 +32,7 @@ export class CustomLogger<T, F extends Function> {
     console.log();
   }
 
-  public setPrimitiveValueAndMessage(value: string | number | boolean, valueIdentifierName: string): CustomLogger<T, F> {
+  public setPrimitiveValueAndMessage(value: string | number | boolean | object, valueIdentifierName: string): CustomLogger<T, F> {
     this._value = value;
     this._valueIdentifierName = valueIdentifierName;
     return this;

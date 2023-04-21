@@ -8,6 +8,7 @@ import { CreateTaskHandler } from './commands/handler/create-task.handler';
 import { TaskRepository } from './repositories/task.repository';
 import { GetAllTasksHandler } from './queries/handlers/get-all-tasks.handler';
 import { MarkTaskCompletedHandler } from './commands/handler/mark-task-completed.handler';
+import { TaskStatusUpdatedHandler } from "./events/handle/updated-task-event.handler";
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { MarkTaskCompletedHandler } from './commands/handler/mark-task-completed
     CreateTaskHandler,
     TaskRepository,
     GetAllTasksHandler,
-    MarkTaskCompletedHandler
+    MarkTaskCompletedHandler,
+    TaskStatusUpdatedHandler
   ],
   exports: [
     TaskRepository

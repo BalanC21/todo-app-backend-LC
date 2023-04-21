@@ -7,6 +7,8 @@ import { TaskRepository } from "../../repositories/task.repository";
 import { TaskEntity } from "../../entities/task.entity";
 import { EntityId } from "../../../shared/models/entity-id";
 import { Result } from "../../../shared/result/result";
+import { UpdateTaskStatusEvent } from "../../events/impl/update-task-status.event";
+import { CustomLogger } from "../../../shared/logger/custom-logger";
 
 @CommandHandler(MarkTaskCompletedCommand)
 export class MarkTaskCompletedHandler extends BaseCommandHandler<MarkTaskCompletedCommand, Task> {
@@ -25,6 +27,12 @@ export class MarkTaskCompletedHandler extends BaseCommandHandler<MarkTaskComplet
     command.setTask(toUpdateTask);
 
     const updatedTask: Result<Task> = Task.fromEntity(toUpdateTask).value!.markAsCompleted(command);
+
+    const updateEvent: UpdateTaskStatusEvent = new UpdateTaskStatusEvent({ task: updatedTask.value, command: command });
+
+    this.eventBus.publish(updateEvent);
+
+    CustomLogger.createLogger(this, this.execute).setPrimitiveValueAndMessage(toUpdateTask, "This is toUpdateTask").logValueWithLocation();
 
     return this.saveTaskToDb(updatedTask.value);
   }

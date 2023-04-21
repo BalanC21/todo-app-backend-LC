@@ -1,9 +1,10 @@
-import { Task } from '../../models/task.model';
-import { MarkTaskCompletedCommand } from '../../commands/impl/mark-task-completed.command';
+import { Task } from "../../models/task.model";
+import { MarkTaskCompletedCommand } from "../../commands/impl/mark-task-completed.command";
+import { IEvent } from "@nestjs/cqrs";
 
 type EventDataPayload = { task: Task; command: MarkTaskCompletedCommand }
 
-export class UpdateTaskStatusEvent {
+export class UpdateTaskStatusEvent implements IEvent {
   readonly data: EventDataPayload;
   readonly name: string;
 
@@ -20,5 +21,4 @@ export class UpdateTaskStatusEvent {
       errors: null
     };
   }
-
 }
