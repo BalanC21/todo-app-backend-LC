@@ -3,7 +3,6 @@ import { Failed, Success } from "../functions/result-builder.functions";
 import { valueIsEmpty } from "../functions/value-is-empty.function";
 import { isNil, isNumber } from "lodash";
 import { IException } from "../interfaces/generics/exception.interface";
-import { LoggerLogger } from "../logger/logger.logger";
 
 export class ValidationChainModel<T> {
   private _result: Result<any>;
