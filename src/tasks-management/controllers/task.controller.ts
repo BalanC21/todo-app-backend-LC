@@ -3,6 +3,7 @@ import { TaskDto } from "../dtos/task.dto";
 import { TaskService } from "../services/task.service";
 import { GetAllTasksParamsDto } from "../dtos/get-all-tasks-params.dto";
 import { DisplayTaskDto } from "../dtos/display-task-dto";
+import { DeleteResult } from "typeorm";
 
 @Controller("api/tasks")
 export class TaskController {
@@ -27,6 +28,11 @@ export class TaskController {
   @Delete(":id")
   async deleteTask(@Param("id") id: number): Promise<TaskDto> {
     return;
+  }
+
+  @Delete()
+  async deleteAllTasks():Promise<DeleteResult> {
+    return this.taskService.deleteAllTasks();
   }
 
   @Patch(":id")

@@ -9,6 +9,8 @@ import { Result } from "../../shared/result/result";
 import { Task } from "../models/task.model";
 import { modelsToTasksDtoList } from "../mappers/task.mappers";
 import { DisplayTaskDto } from "../dtos/display-task-dto";
+import { DeleteAllTasksCommand } from "../commands/impl/delete-all-tasks.command";
+import { DeleteResult } from "typeorm";
 
 @Injectable()
 export class TaskService {
@@ -35,6 +37,11 @@ export class TaskService {
 
   async markTaskAsDone(taskId: number): Promise<TaskDto> {
     const command: MarkTaskCompletedCommand = new MarkTaskCompletedCommand({ taskId: taskId });
+    return await this.commandBus.execute(command);
+  }
+
+  async deleteAllTasks(): Promise<DeleteResult> {
+    const command: DeleteAllTasksCommand = new DeleteAllTasksCommand();
     return await this.commandBus.execute(command);
   }
 }

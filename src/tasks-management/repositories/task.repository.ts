@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { TaskEntity } from "../entities/task.entity";
-import { Repository } from "typeorm";
+import { DeleteResult, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { TaskStatusEnum } from "../enums/task-status.enum";
 import { Task } from "../models/task.model";
@@ -20,6 +20,10 @@ export class TaskRepository {
       return this.getByTaskStatus(status);
     }
     return this.getAllTasks();
+  }
+
+  deleteAllTasks(): Promise<DeleteResult> {
+    return this.repository.delete({});
   }
 
   async saveOne(task: Task): Promise<TaskEntity> {

@@ -4,5 +4,5 @@ export interface TaskDto {
   taskName: string,
   taskDescription: string,
   taskType: TaskStatusEnum,
-  deadline: string
+  taskDeadline: string
 }
