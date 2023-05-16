@@ -7,6 +7,7 @@ import { Task } from "../models/task.model";
 import { Result } from "../../shared/result/result";
 import { valueIsEmpty } from "../../shared/functions/value-is-empty.function";
 import { NotFound } from "../../shared/functions/result-builder.functions";
+import { EntityId } from "../../shared/models/entity-id";
 
 @Injectable()
 export class TaskRepository {
@@ -24,6 +25,10 @@ export class TaskRepository {
 
   deleteAllTasks(): Promise<DeleteResult> {
     return this.repository.delete({});
+  }
+
+  deleteTaskById(taskId: EntityId): Promise<DeleteResult> {
+    return this.repository.delete(taskId.getIdValue());
   }
 
   async saveOne(task: Task): Promise<TaskEntity> {

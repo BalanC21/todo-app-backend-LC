@@ -26,8 +26,8 @@ export class TaskController {
   }
 
   @Delete(":id")
-  async deleteTask(@Param("id") id: number): Promise<TaskDto> {
-    return;
+  async deleteTask(@Param("id") id: number): Promise<DeleteResult> {
+    return this.taskService.deleteTaskById(id);
   }
 
   @Delete()

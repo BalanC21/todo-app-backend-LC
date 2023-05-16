@@ -10,6 +10,7 @@ import { GetAllTasksHandler } from "./queries/handlers/get-all-tasks.handler";
 import { MarkTaskCompletedHandler } from "./commands/handler/mark-task-completed.handler";
 import { TestController } from "./controllers/testController";
 import { DeleteAllTasksHandler } from "./commands/handler/delete-all-tasks.handler";
+import { DeleteTaskByIdHandler } from "./commands/handler/delete-task-by-id.handler";
 
 @Module({
   imports: [TypeOrmModule.forFeature([TaskEntity]), CqrsModule],
@@ -20,7 +21,8 @@ import { DeleteAllTasksHandler } from "./commands/handler/delete-all-tasks.handl
     TaskRepository,
     GetAllTasksHandler,
     MarkTaskCompletedHandler,
-    DeleteAllTasksHandler
+    DeleteAllTasksHandler,
+    DeleteTaskByIdHandler
   ],
   exports: [TaskRepository]
 })

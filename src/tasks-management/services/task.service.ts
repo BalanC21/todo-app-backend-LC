@@ -11,6 +11,7 @@ import { modelsToTasksDtoList } from "../mappers/task.mappers";
 import { DisplayTaskDto } from "../dtos/display-task-dto";
 import { DeleteAllTasksCommand } from "../commands/impl/delete-all-tasks.command";
 import { DeleteResult } from "typeorm";
+import { DeleteTaskByIdCommand } from "../commands/impl/delete-task-by-id.command";
 
 @Injectable()
 export class TaskService {
@@ -43,5 +44,11 @@ export class TaskService {
   async deleteAllTasks(): Promise<DeleteResult> {
     const command: DeleteAllTasksCommand = new DeleteAllTasksCommand();
     return await this.commandBus.execute(command);
+  }
+
+  async deleteTaskById(id: number): Promise<DeleteResult> {
+    const command: DeleteTaskByIdCommand = new DeleteTaskByIdCommand({ taskId: id } );
+    return await this.commandBus.execute( command );
+
   }
 }
